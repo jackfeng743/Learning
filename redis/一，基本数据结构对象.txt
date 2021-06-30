@@ -31,3 +31,61 @@ struct sdshdr{
 
 
 二：链表
+
+1.结构
+
+typedef struct listNode{
+	//前置节点
+	struct listNode *prev;
+	//后置节点
+	struct listNode *next;
+	//节点值
+	void *value;
+}listNode;
+
+2.应用场景
+
+~广泛使用于redis，比如列表的键，发布订阅，慢查询，监视器等等
+
+3.特性及优点
+
+~双向无环链表
+
+
+三：字典
+
+1.结构
+
+哈希表
+typedef struct dictht{
+	//哈希表数组
+	dictEntry **table;
+	//哈希表大小
+	umsigned long size;
+	//哈希表大小掩码，计算索引值，永远等于size-1
+	unsigned long sizemask;
+	//哈希表已有节点数量
+	unsigned long used;
+}dictht;
+
+字典
+typedef struct dict{
+	//
+	dictType *type;
+	//
+	void *privdata;
+	//
+	int trehashidx;
+	
+	
+}
+
+
+
+2.应用场景
+
+~用于保存redis数据库，保存哈希键等等
+
+3.特性及优点
+
+~
