@@ -96,3 +96,66 @@ typedef struct dict{
 
 
 四：跳跃表
+
+1.结构
+
+跳跃表节点
+typedef struct zskiplistNode{
+	//后退指针
+	struct zskiplistNode *backward;
+	//分值
+	double score;
+	//成员对象
+	robj *obj;
+	//层
+	struct zskiplistLevel{
+		//前进指针
+		struct zskiplistNode *forward;
+		//跨度
+		unsigned int span;
+	}level[];
+}zskiplistNode;
+
+跳跃表
+typedef struct zskiplist{
+	//头尾节点
+	struct skiplistNode *header,*tail;
+	//表中节点数量
+	unsigned long length;
+	//表中层数最大的节点层数
+	int level;
+}zskiplist；
+
+2.应用场景
+
+~是有续集合的底层实现之一
+
+3.特性及优点
+
+~redis中跳跃表主要由zskiplist和zskiplistNode组成
+~节点层高为1~32的随机数
+~多个节点可包含同样的分值，但成员变量唯一，节点按照分值大小排序，其次按照成员对象大小排序
+
+五：整数集合
+
+1.结构
+typedef struct intset{
+	//编码方式
+	uint32_t encoding;
+	//集合包含的元素数量
+	uint32_t length;
+	//保存元素的数组
+	int8_t contents[];
+}intset;
+
+2.应用场景
+
+~可作为集合键的底层实现
+
+3.特性及优点
+
+~底层以数组有序无重复方式保存元素，在新增数据类型超出现在数据类型范围时，会升级，节约了内存，但不支持降级
+
+
+六：压缩列表
+
